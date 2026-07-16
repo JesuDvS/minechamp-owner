@@ -1,26 +1,20 @@
 # Railway Template Configuration
 # Este archivo define el template completo de MineChamp
-
 name = "MineChamp - Minecraft Server con Auto-Hibernación"
 description = "Servidor de Minecraft 1.21.11 con proxy que enciende automáticamente el servidor cuando alguien intenta conectarse. Ahorra hasta 70% en costos."
-
 [services.proxy]
 name = "MineChamp Proxy"
 icon = "🚪"
 source = "proxy"
-
 [services.proxy.build]
 dockerfile = "proxy/Dockerfile"
-
 [services.proxy.deploy]
 numReplicas = 1
 sleepApplication = false
 restartPolicyType = "ON_FAILURE"
-
 [[services.proxy.domains]]
 type = "tcp"
 port = 25565
-
 [services.proxy.variables]
 PROXY_PORT = "25565"
 MC_SERVER_HOST = "${minechamp-server.RAILWAY_PRIVATE_DOMAIN}"
@@ -28,38 +22,29 @@ MC_SERVER_PORT = "25565"
 RAILWAY_SERVICE_ID = "${minechamp-server.RAILWAY_SERVICE_ID}"
 RAILWAY_ENVIRONMENT_ID = "${RAILWAY_ENVIRONMENT_ID}"
 COOLDOWN_MINUTES = "2"
-
 [services.proxy.variables.SERVER_MOTD]
 description = "MOTD cuando el servidor está apagado"
 default = "§6§l⛏ MineChamp §r§7| §eClick para iniciar"
-
 [services.proxy.variables.STARTING_MOTD]
 description = "MOTD mientras el servidor inicia"
 default = "§6§l⛏ MineChamp §r§7| §aIniciando..."
-
 [services.proxy.variables.RAILWAY_TOKEN]
 description = "Token de API de Railway (se configura automáticamente)"
 type = "secret"
-
 [services.server]
 name = "MineChamp Server"
 icon = "⛏️"
 source = "."
-
 [services.server.build]
 dockerfile = "Dockerfile"
-
 [services.server.deploy]
 numReplicas = 1
 sleepApplication = false
 restartPolicyType = "ON_FAILURE"
-
 [services.server.networking]
 privateOnly = true
-
 [services.server.variables]
 MEMORY_MIN = "1G"
-MEMORY_MAX = "2G"
 SERVER_PORT = "25565"
 ONLINE_MODE = "false"
 MAX_PLAYERS = "20"
@@ -68,14 +53,12 @@ DIFFICULTY = "normal"
 GAMEMODE = "survival"
 PVP = "true"
 ENABLE_HIBERNATE = "true"
-IDLE_TIMEOUT = "10"
-
 [services.server.variables.MOTD]
 description = "Mensaje del día del servidor"
 default = "§6§l⛏ MineChamp §r§7By §bDubbxd"
-
 [services.server.variables.MEMORY_MAX]
 description = "RAM máxima (debe coincidir con tu plan de Railway)"
-
+default = "2G"
 [services.server.variables.IDLE_TIMEOUT]
 description = "Minutos sin jugadores antes de apagar el servidor"
+default = "10"
